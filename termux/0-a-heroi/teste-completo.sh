@@ -15,7 +15,12 @@
 #       OPTIONS:  ---
 #  REQUIREMENTS:  Android 5.0+
 #                 Termux (https://termux.com/)
-#                 curl (pkg install curl)
+#                 curl, use comando:
+#                     apt update && apt -y upgrade && pkg install -y curl
+#
+#                 Para baixar este arquivo, uma forma e' o seguinte comando
+#                     curl https://raw.githubusercontent.com/EticaAI/eticaai-shell-scripts/master/termux/0-a-heroi/teste-completo.sh -o teste-completo.sh
+#
 #          BUGS:  ---
 #         NOTES:  ---
 #        AUTHOR:  Emerson Rocha, rocha@ieee.org
@@ -25,6 +30,13 @@
 #       CREATED:  2019-05-09 00:36 BRT
 #      REVISION:  ---
 #===============================================================================
+
+# A linha a seguir indica que erros inesperados devem falhar imediatamente este
+# script.
+set -e
+
+TEST_AUTOMATIC_REPO_URL="git@github.com:eticaaibot/0-a-heroi-teste.git"
+TEST_AUTOMATIC_REPO_FOLDER="0-a-heroi-teste"
 
 ### Geracao do par de chave de eticaaibot (feita num Linux Ubuntu)
 ## ssh-keygen -t rsa -b 4096 -C "etica.of.a.ai@gmail.com"
@@ -85,6 +97,41 @@ else
 fi
 ### TESTE SE VARIAVEIS DE AMBIENTE FORAM DEFINIDAS, fim
 
-echo "Criando diretorio "
+echo ">>> Criando diretorio $SSL_LOCAL_FOLDER"
 mkdir $SSL_LOCAL_FOLDER
-curl http://example.com --output $TEST_PRIVATEKEY_LOCALFILE
+
+echo ">>> Importando chave privada padrao"
+curl $TEST_PRIVATEKEY --output $TEST_PRIVATEKEY_LOCALFILE
+
+echo ">>> Instalando todas as dependencias de passo a passo 0-a-heroi.sh"
+apt update
+apt -y upgrade
+pkg install -y openssh
+pkg install -y git
+
+echo ">>> Testando se o GitHub acredita que podemos commitar..."
+ssh -T git@github.com
+
+echo ">>> Criando pasta ~/code/eticaai"
+mkdir -p "~/code/eticaai"
+
+echo ">>> entrando na pasta ~/code/eticaai"
+cd ~/code/eticaai
+
+echo ">>> clonando $TEST_AUTOMATIC_COMMIT"
+git clone $TEST_AUTOMATIC_REPO_URL
+cd $TEST_AUTOMATIC_REPO_FOLDER
+
+echo ">>> criando mudanca num arquivo"
+echo date >> teste-commit.txt
+
+echo ">>> git add ."
+git add .
+
+echo ">>> git commit -m date"
+git commit -m date
+
+echo ">>> git push"
+git push
+
+echo "FIM DE teste-completo.sh"
