@@ -20,7 +20,7 @@ exit 1
 #                 - https://wiki.termux.com/wiki/Internal_and_external_storage
 #                 - https://wiki.termux.com/wiki/Termux-setup-storage
 #         NOTES:  ---
-#        AUTHOR:  Emerson Rocha, rocha@ieee.org
+#        AUTHOR:  Emerson Rocha <rocha@ieee.org>
 #       COMPANY:  EticaAI
 #       LICENSE:  Public Domain
 #       VERSION:  1.0

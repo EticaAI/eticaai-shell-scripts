@@ -16,14 +16,16 @@
 #  REQUIREMENTS:  Android 5.0+
 #                 Termux (https://termux.com/)
 #                 curl, use comando:
-#                     apt update && apt -y upgrade && pkg install -y curl
+#                     apt update && DEBIAN_FRONTEND=noninteractive apt -y upgrade && pkg install -y curl
 #
 #                 Para baixar este arquivo, uma forma e' o seguinte comando
 #                     curl https://raw.githubusercontent.com/EticaAI/eticaai-shell-scripts/master/termux/0-a-heroi/teste-completo.sh -o teste-completo.sh
 #
+#                 Com o arquivo baixado, pode usar metodos descritos em USAGE
+#
 #          BUGS:  ---
 #         NOTES:  ---
-#        AUTHOR:  Emerson Rocha, rocha@ieee.org
+#        AUTHOR:  Emerson Rocha <rocha@ieee.org>
 #       COMPANY:  EticaAI
 #       LICENSE:  Public Domain
 #       VERSION:  1.0
@@ -104,12 +106,24 @@ echo ">>> Importando chave privada padrao"
 curl $TEST_PRIVATEKEY --output $TEST_PRIVATEKEY_LOCALFILE
 
 echo ">>> Instalando todas as dependencias de passo a passo 0-a-heroi.sh"
+DEBIAN_FRONTEND=noninteractive
 apt update
 apt -y upgrade
 pkg install -y openssh
 pkg install -y git
 
-echo ">>> Testando se o GitHub acredita que podemos commitar..."
+echo ">> Define Nome/emails do padroes do git: ${TEST_NAME} / ${TEST_EMAIL}"
+git config --global user.name ${TEST_NAME}
+git config --global user.email ${TEST_EMAIL}
+
+## Aceita automaticamente hosts desconhecidos (uma ma pratica, nao copie isso
+# em scripts onde voce puder aceitar manualmente; uma forma de fazer manualmente
+# seria tentar 'ssh -T git@github.com' e aceitar yes; mas se for REALMENTE
+# tenso, compare os fingerprints com isso aqui https://help.github.com/en/articles/githubs-ssh-key-fingerprints)
+# @todo: considerar remover esta linha
+ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+
+# echo ">>> Testando se o GitHub acredita que podemos commitar..."
 ssh -T git@github.com
 
 echo ">>> Criando pasta ~/code/eticaai"
@@ -123,13 +137,13 @@ git clone $TEST_AUTOMATIC_REPO_URL
 cd $TEST_AUTOMATIC_REPO_FOLDER
 
 echo ">>> criando mudanca num arquivo"
-echo date >> teste-commit.txt
+echo "Automated commit: $(date)" >> teste-commit.txt
 
 echo ">>> git add ."
 git add .
 
-echo ">>> git commit -m date"
-git commit -m date
+echo ">>> git commit -m 'Automated commit: $(date)'"
+git commit -m $(date)
 
 echo ">>> git push"
 git push

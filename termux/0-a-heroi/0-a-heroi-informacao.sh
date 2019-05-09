@@ -15,7 +15,7 @@
 #  REQUIREMENTS:  ---
 #          BUGS:  ---
 #         NOTES:  ---
-#        AUTHOR:  Emerson Rocha, rocha@ieee.org
+#        AUTHOR:  Emerson Rocha <rocha@ieee.org>
 #       COMPANY:  EticaAI
 #       LICENSE:  Public Domain
 #       VERSION:  1.0
