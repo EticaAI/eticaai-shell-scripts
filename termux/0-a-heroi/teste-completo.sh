@@ -1,11 +1,11 @@
 #!/bin/bash
 #===============================================================================
 #
-#          FILE:  0-a-heroi-informacao.sh
+#          FILE:  teste-completo.sh
 #
-#         USAGE:  ./0-a-heroi-informacao.sh
+#         USAGE:  ./teste-completo.sh
 #
-#   DESCRIPTION:  Script escrito como apoio ao rascunho do documento 
+#   DESCRIPTION:  Script de testes, para uso interno, do artigo 
 #                 "Do zero ao seu perfil profissional no GitHub usando apenas
 #                 Smartphone Android e internet móvel" iniciado em 2019-05-07
 #                 na comunidade de Facebook "Ligação Africa Brasil (Programação
@@ -17,15 +17,8 @@
 #         NOTES:  ---
 #        AUTHOR:  Emerson Rocha, rocha@ieee.org
 #       COMPANY:  EticaAI
-#       LICENSE:  Public DOmain
+#       LICENSE:  Public Domain
 #       VERSION:  1.0
-#       CREATED:  2019-05-08 18:03 BRT
+#       CREATED:  2019-05-09 00:36 BRT
 #      REVISION:  ---
 #===============================================================================
-
-if (( $EUID == 0 )); then
-    echo "EXECUTANDO COMO SUPER USUARIO: sim (pode ser perigoso!)"
-    # echo "Cuidado! Parece que esta executando como superusuario sudo."
-else
-    echo "EXECUTANDO COMO SUPER USUARIO: nao"
-fi
